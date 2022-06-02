@@ -1,20 +1,35 @@
+// ENV Variables
 require("dotenv").config();
 
 import express from "express";
 import config from "config";
+import cors from "cors";
+// DB
+import db from "../config/db";
+
+// Routes
+import router from "./router";
+
+// Logger
+import Logger from "../config/logger";
+
+// Middlewares
+import morganMiddleware from "./middleware/morganMiddleware";
+
+const port = config.get<number>("port");
 
 const app = express();
 
+// JSON Req and Res
 app.use(express.json());
-import db from "../config/db";
-import router from "./router";
-import Logger from "../config/logger";
-import morganMiddleware from "../src/middleware/morganMiddleware";
+app.use(cors());
+// Morgan
 app.use(morganMiddleware);
+
 app.use("/api/", router);
-const port = config.get<number>("port");
 
 app.listen(port, async () => {
   await db();
-  Logger.info(`BackEnd Rodando na porta ${port}!!`);
+
+  Logger.info(`App rodando na porta: ${port}`);
 });
