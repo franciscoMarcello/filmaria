@@ -1,9 +1,9 @@
 import React,{useState, FormEvent} from "react";
 import Header from "../../components/Header";
 import api from "../../sevices/api";
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Error from "next/error";
+
 export default function Incluir() {
   const [nome,setNome] = useState('')
   const [diretor, setDiretor] = useState('')
