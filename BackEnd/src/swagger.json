@@ -57,12 +57,12 @@
             }
           }
         }
-      }
-    },
+      },
+    
 
     "get": {
-      "summary": "Criar um filme",
-      "description": "Criar um filme",
+      "summary": "Buscar todos os filmes",
+      "description": "Buscar todos os filmes",
       "tags": ["Filmes"],
       "responses": {
         "200": {
@@ -81,6 +81,30 @@
       }
     }
   },
+  "/api/movie/{id}":{
+    "delete":{
+      "summary": "Apagar um filme",
+        "description": "Apagar um filme",
+        "tags": ["Filmes"],
+        "parameters":[
+          {
+          "name":"filmeId",
+          "description":"O id do filme",
+          "in":"query",
+          "required":true
+        }
+      ],
+        "responses":{
+          "200":{
+            "description":"Filme deletado com sucesso"
+          },
+          "404":{
+            "description":"Filme não cadastrado"
+          }
+        }
+    }
+  }
+},
 
   "components": {
     "schemas": {
