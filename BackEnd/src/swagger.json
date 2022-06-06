@@ -1,0 +1,109 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "REST API de filmes",
+    "description": "Essa REST API tem como objetivo criar um catalago de filmes",
+    "termsOfService": "http://localhost:5000/terms",
+    "contact": {
+      "email": "fmarcello265@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "API de filmes"
+    }
+  ],
+  "paths": {
+    "/api/movie": {
+      "post": {
+        "summary": "Criar um filme",
+        "description": "Criar um filme",
+        "tags": ["Filmes"],
+        "requestBody": {
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Movie"
+              },
+              "example": {
+                "movie": {
+                  "value": {
+                    "title": "Star Wars",
+                    "description": "Guerra nas estrelas",
+                    "director": "George Lucas",
+                    "rating": 4.5,
+                    "poster": "https://s2.glbimg.com/QpzyrDOErKMWEHq7CeDjFFbOGN0=/0x0:680x680/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/internal_photos/bs/2022/e/M/9D8VFaR22wNBYIYt4tkg/star-wars-day.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "422": {
+            "description": "O titulo e obrigatório"
+          },
+          "200": {
+            "description": "Filme cadastrado com sucesso",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Movie"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "get": {
+      "summary": "Criar um filme",
+      "description": "Criar um filme",
+      "tags": ["Filmes"],
+      "responses": {
+        "200": {
+          "description": "ok",
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Movie"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "Movie": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+
+          "rating": {
+            "type": "number"
+          },
+          "poster": { "type": "string" },
+          "director": { "type": "string" }
+        }
+      }
+    }
+  }
+}

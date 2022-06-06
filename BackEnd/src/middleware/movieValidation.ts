@@ -2,11 +2,8 @@ import { body } from "express-validator";
 
 export const movieCreateValidation = () => {
   return [
-    body("title")
-      .isString()
-      .withMessage("O titulo e obrigatorio")
-      .isLength({ min: 5 })
-      .withMessage("O titulo precisa ter no minimo 5 caractares"),
+    body("title").isString().withMessage("O titulo e obrigatorio"),
+
     body("rating")
       .isNumeric()
       .withMessage("A nota precisa ser um número")
