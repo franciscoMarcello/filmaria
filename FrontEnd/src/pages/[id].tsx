@@ -29,18 +29,20 @@ export default function Filme({
   rating,
 }: Filme) {
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 ">
       <Header />
-      <div className="grid-cols-2 mx-auto flex items-center justify-center w-4/5 mt-36 sm:grid-cols-1   ">
-        <div className="w-4/5 h-4/5 aspect-w-1 aspect-h-1  rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
+      <div className="mx-auto mt-12  lx:flex  justify- w-4/5  sm:grid-cols-1  flex-row  ">
+        <div className=" h-65 w-64 rounded-lg overflow-hidden lx:flex-2 ">
           <img
             className="w-full h-full object-center object-cover group-hover:opacity-75"
             src={poster}
             alt={title}
           />
         </div>
-        <div className=" ml-12">
+        <div className=" ml-12 lx:flex-1">
           <h3 className=" mb-5 text-5xl font-medium text-gray-900">{title}</h3>
+          <h4>Diretor: <strong>{director}</strong></h4>
+          <span >Nota no IMDB: <strong>{rating}</strong></span>
           <p className="mt-1 text-lg font-medium text-gray-700">
             {description}
           </p>
