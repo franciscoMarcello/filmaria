@@ -3,13 +3,25 @@ import Header from "../../components/Header";
 import api from "../../sevices/api";
 import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { GetServerSidePropsContext } from "next";
+import Router from "next/router";
 
-export default function Incluir() {
-  const [nome,setNome] = useState('')
-  const [diretor, setDiretor] = useState('')
-  const [sinopsia, setSinopsia] = useState('')
-  const [nota, setNota] = useState('')
-  const [url, setUrl] = useState('')
+
+interface Filme {
+    _id: string;
+    description: string;
+    title: string;
+    poster: string;
+    director: string;
+    rating: string | number;
+  }
+
+export default function Alterar({_id,title, director, poster, rating,description}:Filme) {
+  const [nome,setNome] = useState(title)
+  const [diretor, setDiretor] = useState(director)
+  const [sinopsia, setSinopsia] = useState(description)
+  const [nota, setNota] = useState(rating)
+  const [url, setUrl] = useState(poster)
 
   async function handleSubmit(e:FormEvent) {
     e.preventDefault()
@@ -17,19 +29,16 @@ export default function Incluir() {
       toast.warn("Preencha todos os campos")
     }
     try{
-      await api.post('/movie',{
+      await api.patch(`/movie/${_id}`,{
         title:nome,
         rating:nota,
         description:sinopsia,
         director:diretor,
         poster:url
       })
-      setNome('')
-      setDiretor('')
-      setNota('')
-      setSinopsia('')
-      setUrl('')
-      toast.success("Filme cadastrado com sucesso")
+      
+      toast.success("Filme alterado com sucesso")
+      Router.push('/')
     }catch(error:any ){
      const mensagem = error.response.data.errors[0]
      console.log(mensagem)
@@ -49,7 +58,7 @@ export default function Incluir() {
               Filme
             </h3>
             <p className="mt-1 text-sm ml-2 text-gray-600">
-              Preencha as informação para adicionar um filme ao nosso catalago
+              Preencha as informação para alterar um filme ao nosso catalago
             </p>
           </div>
         </div>
@@ -162,7 +171,7 @@ export default function Incluir() {
                   type="submit"
                   className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Cadastrar
+                  Alterar
                 </button>
               </div>
             </div>
@@ -172,3 +181,11 @@ export default function Incluir() {
     </div>
   );
 }
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const id = context.query.id;
+    const response = await api.get(`movie/${id}`);
+    const Filme = response.data;
+    return {
+      props: Filme,
+    };
+  }

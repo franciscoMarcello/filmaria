@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import api from "../sevices/api";
 import { AiFillStar } from "react-icons/ai";
+import Head from 'next/head'
 type FilmesProps = {
   _id: string;
   description: string;
@@ -21,8 +22,11 @@ export default function Home({ filmes }: HomeProps) {
   const [listFilmes, setListFilmes] = useState(filmes || []);
   return (
     <div className="bg-gray-100">
+      <Head>
+        <title>Filmaria</title>
+      </Head>
       <Header />
-      <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-6xl lg:px-8">
+      <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-5xl lg:px-8">
         <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {listFilmes.map((item) => (
             <Link key={item._id} href={`/${item._id}`}>
