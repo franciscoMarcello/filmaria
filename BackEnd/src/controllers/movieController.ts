@@ -67,3 +67,20 @@ export async function updateMovie(req: Request, res: Response) {
     return res.status(500).json({ error: "Por favor tente mais tarde!" });
   }
 }
+export async function findByTitle(req:Request, res:Response){
+try{
+  const data = req.body
+
+    const movie = await MovieModel.find(data);
+
+ 
+  if (!movie) {
+     return res.status(404).json({ error: "Nenhum filme encotrado com esse nome" });
+   }
+   res.status(200).json(movie)
+}catch (error:any){
+  Logger.error(`Error no sistema: ${error.message}`);
+  return res.status(500).json({ error: "Por favor tente mais tarde!" });
+}
+
+}

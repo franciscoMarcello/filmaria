@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createMovie,
+  findByTitle,
   findMovieById,
   getAllMovies,
   removeMovie,
@@ -21,6 +22,7 @@ export default router
     validate,
     createMovie
   )
+  .get('/movie/find', findByTitle)
   .get("/movie/:id", findMovieById)
   .get("/movie", getAllMovies)
   .delete("/movie/:id", removeMovie)

@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import Header from "../components/Header";
 import api from "../sevices/api";
 import { AiFillStar } from "react-icons/ai";
 import Head from 'next/head'
+import {FaSearch} from 'react-icons/fa'
 type FilmesProps = {
   _id: string;
   description: string;
@@ -20,6 +21,17 @@ interface HomeProps {
 
 export default function Home({ filmes }: HomeProps) {
   const [listFilmes, setListFilmes] = useState(filmes || []);
+  const [pesquisa, setPesquisa] = useState('')
+
+  async function Pesquisa() {
+
+    const response = await api.get('/movie/find',{
+      title:pesquisa
+    })
+    console.log(response)
+    setListFilmes(response.data)
+
+  }
   return (
     <div className="bg-gray-100">
       <Head>
@@ -27,6 +39,14 @@ export default function Home({ filmes }: HomeProps) {
       </Head>
       <Header />
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-5xl lg:px-8">
+      
+      <label className="block text-gray-700 text-sm font-bold mb-2" >
+        Nome do filme
+      </label>
+      <input type="seach"className="shadow mr-3 appearance-none border border-red-500 rounded w-64  py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"  placeholder="Matrix" value={pesquisa} onChange={(e) => setPesquisa(e.target.value)}/>
+      <button className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={Pesquisa}>
+        <FaSearch size={20} color="#fff"/>
+      </button>
         <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {listFilmes.map((item) => (
             <Link key={item._id} href={`/${item._id}`}>
